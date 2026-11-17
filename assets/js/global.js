@@ -162,3 +162,38 @@ document.addEventListener("DOMContentLoaded", () => {
         if (href && href.indexOf("?") === -1) link.setAttribute("href", href + search);
     });
 });
+
+// Booking widget (Travelline): keep the whole form visible on phones.
+// The widget sets a short fixed height and scrolling="no" on its iframe,
+// so on a narrow screen the lower half of the form gets cut off.
+(function () {
+    const box = document.getElementById("tl-booking-form");
+    if (!box) return;
+
+    let attempts = 0;
+    const fix = () => {
+        if (window.innerWidth > 768) return;
+        box.querySelectorAll("iframe").forEach(frame => {
+            const rect = frame.getBoundingClientRect();
+            const style = getComputedStyle(frame);
+            // Ignore the hidden measuring frames the widget creates.
+            if (style.display === "none" || style.opacity === "0") return;
+            if (rect.width < 100 || rect.height < 10) return;
+            frame.setAttribute("scrolling", "yes");
+            frame.style.setProperty("width", "100%", "important");
+            frame.style.setProperty("min-width", "0", "important");
+            frame.style.setProperty("max-width", "100%", "important");
+            frame.style.setProperty("height", "900px", "important");
+            frame.style.setProperty("min-height", "900px", "important");
+        });
+    };
+
+    const timer = setInterval(() => {
+        fix();
+        if (++attempts > 60) clearInterval(timer);
+    }, 500);
+    window.addEventListener("resize", () => {
+        attempts = 0;
+        fix();
+    });
+})();
