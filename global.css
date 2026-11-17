@@ -1800,7 +1800,7 @@ form label {
     transition: transform 0.4s ease;
 }
 
-/* Адаптив */
+/* Responsive */
 @media (max-width: 768px) {
 
     .wr {
