@@ -1808,6 +1808,20 @@ form label {
         padding: 0 10px;
     }
 
+    /* Booking form: never let the embedded widget overflow the phone screen. */
+    #tl-booking-form,
+    #tl-booking-form > div {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow: visible !important;
+    }
+
+    #tl-booking-form iframe {
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+    }
+
     .btn.rounded-border-button {
         padding: 0 15px;
     }
